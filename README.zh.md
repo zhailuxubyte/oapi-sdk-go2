@@ -13,7 +13,7 @@
     - [创建API Client](#创建api-client)
     - [配置API Client](#配置api-client)
 
-- [调用API](#调用api)
+- [API调用](#api调用)
     - [基本用法](#基本用法)
     - [配置请求选项](#配置请求选项)
     - [原生API调用方式](#原生api调用方式)
@@ -257,7 +257,7 @@ type Cache interface {
   </tbody>
 </table>
 
-# 调用API
+# API调用
 
 ## 基本用法
 
