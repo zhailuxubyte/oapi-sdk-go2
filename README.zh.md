@@ -189,10 +189,10 @@ var LarkBaseUrl = "https://open.larksuite.com"
 
 ```go
 type Logger interface {
-Debug(context.Context, ...interface{})
-Info(context.Context, ...interface{})
-Warn(context.Context, ...interface{})
-Error(context.Context, ...interface{})
+   Debug(context.Context, ...interface{})
+   Info(context.Context, ...interface{})
+   Warn(context.Context, ...interface{})
+   Error(context.Context, ...interface{})
 }
 ```
 
@@ -212,7 +212,7 @@ Error(context.Context, ...interface{})
 
 ```go
 type HttpClient interface {
-Do(*http.Request) (*http.Response, error)
+   Do(*http.Request) (*http.Response, error)
 }
 
 ```
@@ -232,8 +232,8 @@ Do(*http.Request) (*http.Response, error)
 
 ```go
 type Cache interface {
-Set(ctx context.Context, key string, value string, expireTime time.Duration) error
-Get(ctx context.Context, key string) (string, error)
+   Set(ctx context.Context, key string, value string, expireTime time.Duration) error
+   Get(ctx context.Context, key string) (string, error)
 }
 
 ```
