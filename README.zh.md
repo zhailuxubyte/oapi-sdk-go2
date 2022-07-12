@@ -5,7 +5,6 @@
 # 目录
 
 
-
 <!-- toc -->
 
 - [安装](#安装)
@@ -36,21 +35,21 @@
 
 # 安装
 
-go get -u github.com/larksuite/oapi-sdk-go@v1.1.47-0.20220711130052-963acb57931d
+go get -u github.com/larksuite/oapi-sdk-go
 
 # API Client
 
-开发者在调用API前，需要先创建一个API Client，然后才可以基于API Client发起API调用
+开发者在调用 API 前，需要先创建一个 API Client，然后才可以基于 API Client 发起 API 调用
 
 ## 创建API Client
 
-- 对于自建应用,可使用下面代码来创建一个API Client
+- 对于自建应用，可使用下面代码来创建一个 API Client
 
 ```go
 var client = lark.NewClient("appID", "appSecret") // 默认配置为自建应用
 ```
 
-- 对于商店应用,需在创建API Client时，使用lark.WithMarketplaceApp方法指定AppType为商店应用
+- 对于商店应用，需在创建 API Client 时，使用 lark.WithMarketplaceApp 方法指定 AppType 为商店应用
 
 ```go
 var client = lark.NewClient("appID", "appSecret",lark.WithMarketplaceApp()) // 设置App为商店应用
@@ -58,16 +57,16 @@ var client = lark.NewClient("appID", "appSecret",lark.WithMarketplaceApp()) // �
 
 ## 配置API Client
 
-创建API Client时，可对API Client进行一定的配置，比如我们可以在创建API Client 时设置日志级别、设置http请求超时时间等等：
+创建 API Client 时，可对 API Client 进行一定的配置，比如我们可以在创建 API Client 时设置日志级别、设置 http 请求超时时间等等：
 
 ```go
 var client = lark.NewClient("appID", "appSecret",
-	lark.WithLogLevel(larkcore.LogLevelDebug),
-	lark.WithReqTimeout(3*time.Second),
-	lark.WithEnableTokenCache(true),
-	lark.WithHelpdeskCredential("id", "token"),
-	lark.WithLogger(larkcore.NewEventLogger()),
-	lark.WithHttpClient(http.DefaultClient))
+lark.WithLogLevel(larkcore.LogLevelDebug),
+lark.WithReqTimeout(3*time.Second),
+lark.WithEnableTokenCache(true),
+lark.WithHelpdeskCredential("id", "token"),
+lark.WithLogger(larkcore.NewEventLogger()),
+lark.WithHttpClient(http.DefaultClient))
 ```
 
 每个配置选项的具体含义，如下表格：
@@ -95,7 +94,7 @@ var client = lark.NewClient("appID", "appSecret",
         <code>lark.WithLogLevel(logLevel larkcore.LogLevel)</code>
       </td>
       <td>
-设置API Client的日志输出级别(默认为Info级别)，枚举值如下：
+设置 API Client 的日志输出级别(默认为 Info 级别)，枚举值如下：
 
 - LogLevelDebug
 - LogLevelInfo
@@ -113,7 +112,7 @@ var client = lark.NewClient("appID", "appSecret",
         <code>lark.WithMarketplaceApp()</code>
       </td>
       <td>
-设置App类型为商店应用，ISV开发者必须要设置该选项，默认为自建应用
+设置 App 类型为商店应用，ISV 开发者必须要设置该选项，默认为自建应用
 
 </td>
 </tr>
@@ -126,7 +125,7 @@ var client = lark.NewClient("appID", "appSecret",
         <code>lark.WithReqTimeout(time time.Duration)</code>
       </td>
       <td>
-设置Http整个调用过程的超时时间，单位为time.Duration。
+设置 Http 整个调用过程的超时时间，单位为 time.Duration。
 默认为0，表示永不超时
 
 </td>
@@ -159,8 +158,8 @@ var LarkBaseUrl = "https://open.larksuite.com"
         <code>lark.WithEnableTokenCache(enableTokenCache bool)</code>
       </td>
       <td>
-是否开启UserAccessToken,TenantAccessToken的自动获取与缓存;
-默认开启，如需要关闭可传递false
+是否开启 UserAccessToken,TenantAccessToken 的自动获取与缓存;
+默认开启，如需要关闭可传递 false
 </td>
 </tr>
 
@@ -172,7 +171,7 @@ var LarkBaseUrl = "https://open.larksuite.com"
         <code>lark.WithHelpdeskCredential(helpdeskID, helpdeskToken string)</code>
       </td>
       <td>
-仅在调用服务台业务的API时需要传递
+仅在调用服务台业务的 API 时需要传递
 </td>
 </tr>
 
@@ -185,14 +184,14 @@ var LarkBaseUrl = "https://open.larksuite.com"
         <code>lark.WithLogger(logger larkcore.Logger)</code>
       </td>
       <td>
-设置自定义的日志器，开发者需要实现下面的日志接口:
+设置自定义的日志器，开发者需要实现下面的 Logger 接口:
 
 ```go
 type Logger interface {
-   Debug(context.Context, ...interface{})
-   Info(context.Context, ...interface{})
-   Warn(context.Context, ...interface{})
-   Error(context.Context, ...interface{})
+Debug(context.Context, ...interface{})
+Info(context.Context, ...interface{})
+Warn(context.Context, ...interface{})
+Error(context.Context, ...interface{})
 }
 ```
 
@@ -208,7 +207,7 @@ type Logger interface {
         <code>lark.WithHttpClient(httpClient larkcore.HttpClient)</code>
       </td>
       <td>
-设置自定义的httpClient，开发者需要实现下面的日志接口:
+设置自定义的 httpClient，开发者需要实现下面的 HttpClient 接口:
 
 ```go
 type HttpClient interface {
@@ -228,12 +227,12 @@ type HttpClient interface {
         <code>lark.WithTokenCache(cache larkcore.Cache)</code>
       </td>
       <td>
-设置自定义的token缓存，开发者需要实现下面的日志接口:
+设置自定义的 token 缓存，开发者需要实现下面的 Cache 接口:
 
 ```go
 type Cache interface {
-   Set(ctx context.Context, key string, value string, expireTime time.Duration) error
-   Get(ctx context.Context, key string) (string, error)
+Set(ctx context.Context, key string, value string, expireTime time.Duration) error
+Get(ctx context.Context, key string) (string, error)
 }
 
 ```
@@ -250,7 +249,7 @@ type Cache interface {
         <code>lark.WithLogReqRespInfoAtDebugLevel(printReqRespLog bool)</code>
       </td>
       <td>
-开启Http请求参数和响应参数的日志打印开关；开启后，在debug模式下会打印http请求的headers,body等信息
+开启 Http 请求参数和响应参数的日志打印开关；开启后，在 debug 模式下会打印 http 请求的 headers,body 等信息
 
 </td>
 </tr>
@@ -258,13 +257,13 @@ type Cache interface {
 </table>
 
 # API调用
-创建完毕API Client，我们可以使用 Client.业务域.资源.方法名称 来定位具体的API方法，然后对具体的API发起调用。
+创建完毕 API Client，我们可以使用 Client.业务域.资源.方法名称 来定位具体的 API 方法，然后对具体的 API 发起调用。
 
-飞书开放平台开放的所有API列表，可点击[这里查看](https://open.feishu.cn/document/ukTMukTMukTM/uYTM5UjL2ETO14iNxkTN/server-api-list)
+飞书开放平台开放的所有 API 列表，可点击[这里查看](https://open.feishu.cn/document/ukTMukTMukTM/uYTM5UjL2ETO14iNxkTN/server-api-list)
 
 ## 基本用法
 
-如下代码我们通过client调用文档业务的Create方法，创建一个文档：
+如下代码我们通过 client 调用文档业务的 Create 方法，创建一个文档：
 
 ``` go
 import (
@@ -280,7 +279,7 @@ import (
 
 
 func main() {
-	// 创建client
+	// 创建 client
 	client := lark.NewClient("appID", "appSecret")
 
 	// 发起请求
@@ -310,7 +309,7 @@ func main() {
 
 ## 配置请求选项
 
-开发者在每次发起API调用时，可以设置请求级别的一些参数，比如传递UserAccessToken,自定义Headers等：
+开发者在每次发起 API 调用时，可以设置请求级别的一些参数，比如传递 UserAccessToken ,自定义 Headers 等：
 
 ```go
 import (
@@ -359,6 +358,7 @@ func main() {
 	// 业务数据处理
 	fmt.Println(larkcore.Prettify(resp.Data))
 }
+
 ```
 
 如下表格，展示了所有请求级别可配置的选项：
@@ -412,7 +412,7 @@ func main() {
         <code>larkcore.WithTenantAccessToken(tenantAccessToken string)</code>
       </td>
       <td>
-当开发者自己维护租户token时，可以通过该选项传递组合token
+当开发者自己维护租户 toke n时，可以通过该选项传递组合 token
 
 </td>
 </tr>
@@ -439,7 +439,7 @@ func main() {
         <code>larkcore.WithTenantKey(tenantKey string)</code>
       </td>
       <td>
-设置租户key, 商店应用必须设置该选项
+设置租户 key, 商店应用必须设置该选项
 </td>
 </tr>
 
@@ -448,32 +448,41 @@ func main() {
 
 ## 原生API调用方式
 
-有些老版本的开放接口，不能生成结构化的API，这时可使用原生模式进行调用：
+有些老版本的开放接口，不能生成结构化的 API， 导致 SDK 内无法提供结构化的使用方式，这时可使用原生模式进行调用：
 
 ```go
-// 创建 API Client
-var client = lark.NewClient(appID, appSecret,
-	lark.WithLogLevel(larkcore.LogLevelDebug),
-	lark.WithLogReqRespInfoAtDebugLevel(true))
+import (
+	"context"
+	"fmt"
+	"os"
 
-// 发起请求
-resp, err := client.Post(context.Background(), "https://www.feishu.cn/approval/openapi/v2/approval/get", map[string]interface{}{
-	"approval_code": "ou_c245b0a7dff2725cfa2fb104f8b48b9d",
-}, larkcore.AccessTokenTypeTenant)
+	"github.com/larksuite/oapi-sdk-go"
+	"github.com/larksuite/oapi-sdk-go/core"
+)
 
-// 错误处理
-if err != nil {
-   fmt.Println(err)
-   return
+func main() {
+	// 创建 API Client
+	var cli = lark.NewClient("appID", "appSecret")
+
+	// 发起请求
+	resp, err := cli.Post(context.Background(), "https://www.feishu.cn/approval/openapi/v2/approval/get", map[string]interface{}{
+		"approval_code": "ou_c245b0a7dff2725cfa2fb104f8b48b9d",
+	}, larkcore.AccessTokenTypeTenant)
+
+	// 错误处理
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	// 获取请求ID
+	fmt.Println(resp.RequestId())
+
+	// 处理请求结果
+	fmt.Println(resp.StatusCode) // http status code
+	fmt.Println(resp.Header)     // http header
+	fmt.Println(resp.RawBody)    // http body}
 }
-
-// 获取请求ID
-fmt.Println(resp.RequestId())
-
-// 处理请求结果
-fmt.Println(resp.StatusCode) // http status code
-fmt.Println(resp.Header)     // http header
-fmt.Println(resp.RawBody)    // http body
 ```
 
 # 处理消息事件回调
@@ -482,7 +491,7 @@ fmt.Println(resp.RawBody)    // http body
 飞书开放平台开放的所有事件列表，可点击[这里查看](https://open.feishu.cn/document/ukTMukTMukTM/uYDNxYjL2QTM24iN0EjN/event-list)
 ## 基本用法
 
-开发者订阅消息事件后，可以使用下面代码，对飞书开发平台推送的消息事件进行处理，如下代码基于go-sdk原生http server启动一个httpServer：
+开发者订阅消息事件后，可以使用下面代码，对飞书开放平台推送的消息事件进行处理，如下代码基于 go-sdk 原生 http server 启动一个 httpServer：
 
 ```go
 import (
@@ -510,28 +519,31 @@ func main() {
         return nil
     })
     
-    // 注册http 路由
+    // 注册 http 路由
     http.HandleFunc("/webhook/event", httpserverext.NewEventHandlerFunc(handler, larkevent.WithLogLevel(larkcore.LogLevelDebug)))
     
-    // 启动http服务
+    // 启动 http 服务
     err := http.ListenAndServe(":9999", nil)
     if err != nil {
         panic(err)
     }
 }
 
+
 ```
 
-其中NewEventDispatcher方法的参数用于签名验证和消息解密使用，默认可以传递为空串；但是如果开发者在控制台开启了加密，则必须传递控制台上提供的值。
+其中 NewEventDispatcher 方法的参数用于签名验证和消息解密使用，默认可以传递为空串；但是如果开发者的应用在 [控制台](https://open.feishu.cn/app?lang=zh-CN) 的【事件订阅】里面开启了加密，则必须传递控制台上提供的值。
+![Console](doc/console.jpeg)
 
-## 集成gin框架
+## 集成Gin框架
+如果开发者当前应用使用的是 Gin Web 框架，并且不想要使用 Go-Sdk 提供的原生的 Http Server，则可使用下面方式，把当前应用的 Gin 服务与 SDK进行集成。
 
-要想集成已有gin框架，开发者需要引入集成包oapi-sdk-gin
+要想把 SDK 集成已有 Gin 框架，开发者需要引入集成包 [oapi-sdk-gin](https://github.com/larksuite/oapi-sdk-gin)
 
 ### 安装集成包
 
 ```go
-go get -u github.com/larksuite/oapi-sdk-gin@v0.0.0-20220711103827-94cd9cfd9819
+go get -u github.com/larksuite/oapi-sdk-gin
 ```
 
 ### 集成示例
@@ -568,7 +580,7 @@ func main() {
 
 	...
 
-	// 在已有gin实例上注册消息处理路由
+	// 在已有 Gin 实例上注册消息处理路由
 	gin.POST("/webhook/event", sdkginext.NewEventHandlerFunc(handler))
 }
 ```
@@ -578,7 +590,7 @@ func main() {
 关于卡片行为相关的知识，可点击[这里查看](https://open.feishu.cn/document/ukTMukTMukTM/uczM3QjL3MzN04yNzcDN)
 ## 基本用法
 
-开发者配置消息卡片回调地址后，可以使用下面代码，对飞书开发平台推送的卡片行为进行处理，如下代码基于go-sdk原生http server启动一个httpServer：
+开发者配置消息卡片回调地址后，可以使用下面代码，对飞书开放平台推送的卡片行为进行处理，如下代码基于go-sdk原生http server启动一个httpServer：
 
 ```go
 import (
@@ -592,7 +604,7 @@ import (
 )
 
 func main() {
-	// 创建card处理器
+	// 创建 card 处理器
 	cardHandler := larkcard.NewCardActionHandler("v", "", func(ctx context.Context, cardAction *larkcard.CardAction) (interface{}, error) {
 		fmt.Println(larkcore.Prettify(cardAction))
 	    fmt.Println(cardAction.RequestId())
@@ -603,7 +615,7 @@ func main() {
 	// 注册处理器
 	http.HandleFunc("/webhook/card", httpserverext.NewCardActionHandlerFunc(cardHandler, larkevent.WithLogLevel(larkcore.LogLevelDebug)))
 
-	// 启动http服务
+	// 启动 http 服务
 	err := http.ListenAndServe(":9999", nil)
 	if err != nil {
 		panic(err)
@@ -612,56 +624,13 @@ func main() {
 
 ```
 
-如上示例，如果不需要处理器内返回业务结果给飞书服务端，则直接返回nil
+如上示例，如果不需要处理器内返回业务结果给飞书服务端，则直接返回 nil
 
 ## 返回卡片消息
 
 如开发者需要卡片处理器内同步返回用于更新消息卡片的消息体，则可使用下面方法方式进行处理：
 
 ```go
-import (
-	"context"
-	"fmt"
-	"net/http"
-
-	"github.com/larksuite/oapi-sdk-go/card"
-	"github.com/larksuite/oapi-sdk-go/core"
-	"github.com/larksuite/oapi-sdk-go/httpserverext"
-)
-
-func main() {
-	// 创建card处理器
-	cardHandler := larkcard.NewCardActionHandler("v", "", func(ctx context.Context, cardAction *larkcard.CardAction) (interface{}, error) {
-		fmt.Println(larkcore.Prettify(cardAction))
-	    fmt.Println(cardAction.RequestId())
-		
-		// 创建卡片信息
-		messageCard := larkcard.NewMessageCard().
-		Config(config).
-		Header(header).
-		Elements([]larkcard.MessageCardElement{divElement, processPersonElement}).
-		CardLink(cardLink).
-		Build()
-
-		return messageCard, nil
-	})
-
-	// 注册处理器
-	http.HandleFunc("/webhook/card", httpserverext.NewCardActionHandlerFunc(cardHandler, larkevent.WithLogLevel(larkcore.LogLevelDebug)))
-
-	// 启动http服务
-	err := http.ListenAndServe(":9999", nil)
-	if err != nil {
-		panic(err)
-	}
-}
-```
-
-## 返回自定义消息
-
-如开发者需卡片处理器内返回自定义内容，则可以使用下面方式进行处理：
-
-```go 
 import (
 	"context"
 	"fmt"
@@ -707,17 +676,71 @@ func main() {
 	}
 }
 
+```
+
+## 返回自定义消息
+
+如开发者需卡片处理器内返回自定义内容，则可以使用下面方式进行处理：
+
+```go 
+import (
+	"context"
+	"fmt"
+	"net/http"
+
+	"github.com/larksuite/oapi-sdk-go/card"
+	"github.com/larksuite/oapi-sdk-go/core"
+	"github.com/larksuite/oapi-sdk-go/httpserverext"
+)
+
+func main() {
+	// 创建 card 处理器
+	cardHandler := larkcard.NewCardActionHandler("v", "", func(ctx context.Context, cardAction *larkcard.CardAction) (interface{}, error) {
+		fmt.Println(larkcore.Prettify(cardAction))
+	    fmt.Println(cardAction.RequestId())
+		
+		// 创建 http body
+		body := make(map[string]interface{})
+		body["content"] = "hello"
+
+		i18n := make(map[string]string)
+		i18n["zh_cn"] = "你好"
+		i18n["en_us"] = "hello"
+		i18n["ja_jp"] = "こんにちは"
+		body["i18n"] = i18n 
+		
+		// 创建自定义消息：http状态码，body内容
+		resp := &larkcard.CustomResp{
+			StatusCode: 400,
+			Body:       body,
+		}
+
+		return resp, nil
+	})
+
+	// 注册处理器
+	http.HandleFunc("/webhook/card", httpserverext.NewCardActionHandlerFunc(cardHandler, larkevent.WithLogLevel(larkcore.LogLevelDebug)))
+
+	// 启动 http 服务
+	err := http.ListenAndServe(":9999", nil)
+	if err != nil {
+		panic(err)
+	}
+}
+
 
 ```
 
 ## 集成gin框架
 
-要想集成已有gin框架，开发者需要引入集成包oapi-sdk-gin
+如果开发者当前应用使用的是 Gin Web 框架，并且不想要使用 Go-Sdk 提供的原生的 Http Server，则可使用下面方式，把当前应用的 Gin 服务与 SDK进行集成。
+
+要想把 SDK 集成已有 Gin 框架，开发者需要引入集成包 [oapi-sdk-gin](https://github.com/larksuite/oapi-sdk-gin)
 
 ### 安装集成包
 
 ```go
-go get -u github.com/larksuite/oapi-sdk-gin@v0.0.0-20220711103827-94cd9cfd9819
+go get -u github.com/larksuite/oapi-sdk-gin
 ```
 
 ### 集成示例
@@ -735,7 +758,7 @@ import (
 
 
 func main() {
-    // 创建card处理器
+    // 创建 card 处理器
     cardHandler := larkcard.NewCardActionHandler("v", "", func(ctx context.Context, cardAction *larkcard.CardAction) (interface{}, error) {
         fmt.Println(larkcore.Prettify(cardAction))
 	    fmt.Println(cardAction.RequestId())
@@ -743,15 +766,14 @@ func main() {
         return nil, nil
     })
     ...
-    // 在已有的gin示例上注册卡片处理路由
+    // 在已有的 Gin 实例上注册卡片处理路由
     gin.POST("/webhooXk/card", sdkginext.NewCardActionHandlerFunc(cardHandler))
     ...
 }
 ```
 
 # License
-
-- MIT
+使用 MIT
 
 
 
