@@ -1,6 +1,6 @@
 # 飞书开放接口SDK
 
-旨在让开发者便捷的调用飞书开放API、处理服务端消息事件、处理服务端推送的卡片行为。
+旨在让开发者便捷的调用飞书开放API、处理订阅的消息事件、处理服务端推送的卡片行为。
 
 # 目录
 
@@ -40,7 +40,7 @@ go get -u github.com/larksuite/oapi-sdk-go@v1.1.47-0.20220711130052-963acb57931d
 
 # API Client
 
-开发者在调用API前，需要先创建一个API Client，然后基于API Client发起API调用
+开发者在调用API前，需要先创建一个API Client，然后才可以基于API Client发起API调用
 
 ## 创建API Client
 
@@ -258,10 +258,12 @@ type Cache interface {
 </table>
 
 # API调用
+创建完毕API Client，我们可以使用 Client.业务域.资源.方法名称 来定位具体的API方法，然后对具体的API发起调用。
+
+飞书开放平台开放的所有API列表，可点击[这里查看](https://open.feishu.cn/document/ukTMukTMukTM/uYTM5UjL2ETO14iNxkTN/server-api-list)
 
 ## 基本用法
 
-创建完毕API Client，我们可以使用 Client.业务域.资源.方法名称 来定位具体的API方法，然后对具体的API发起调用; 
 如下代码我们通过client调用文档业务的Create方法，创建一个文档：
 
 ``` go
@@ -475,7 +477,9 @@ fmt.Println(resp.RawBody)    // http body
 ```
 
 # 处理消息事件回调
+关于消息订阅相关的知识，可以点击[这里查看](https://open.feishu.cn/document/ukTMukTMukTM/uUTNz4SN1MjL1UzM)
 
+飞书开放平台开放的所有事件列表，可点击[这里查看](https://open.feishu.cn/document/ukTMukTMukTM/uYDNxYjL2QTM24iN0EjN/event-list)
 ## 基本用法
 
 开发者订阅消息事件后，可以使用下面代码，对飞书开发平台推送的消息事件进行处理，如下代码基于go-sdk原生http server启动一个httpServer：
@@ -571,8 +575,7 @@ func main() {
 
 # 处理卡片行为回调
 
-开发者配置消息卡片回调地址后，飞书开发平台会推送的卡片行为到注册的回调地址；下面我们看如何对推送的卡片行为进行处理。
-
+关于卡片行为相关的知识，可点击[这里查看](https://open.feishu.cn/document/ukTMukTMukTM/uczM3QjL3MzN04yNzcDN)
 ## 基本用法
 
 开发者配置消息卡片回调地址后，可以使用下面代码，对飞书开发平台推送的卡片行为进行处理，如下代码基于go-sdk原生http server启动一个httpServer：
